@@ -6,14 +6,16 @@ class EmployeesController < ApplicationController
   end
 
   def new
-    @employee = Employee.new
+    @division = Division.find(params[:division_id])
+    @employee = @division.employees.new
     render :new
   end
 
   def create
-    @employee = Employee.new(employee_params)
+    @division = Division.find(params[:division_id])
+    @employee = @division.employees.new(employee_params)
     if @employee.save
-      redirect_to employees_path
+      redirect_to division_path(@division)
     else 
       render :new
     end
@@ -25,14 +27,17 @@ class EmployeesController < ApplicationController
   end
 
   def show
+    @division = Division.find(params[:division_id])
     @employee = Employee.find(params[:id])
+    @projects = Project.all
+    render :show
   end
 
   def update
     @employee = Employee.find(params[:id])
     if @employee.update(employee_params)
       flash[:notice] = "Employee Updated"
-      redirect_to employees_path
+      redirect_to division_path(@division)
     else
       render :edit
     end
@@ -42,11 +47,11 @@ class EmployeesController < ApplicationController
     @employee = Employee.find(params[:id])
     @employee.destroy
     flash[:notice] = "Employee Deleted"
-    redirect_to employees_path
+    redirect_to division_path(@division)
   end
 
   private
-    def album_params
+    def employee_params
       params.require(:employee).permit(:name)
     end
 end
