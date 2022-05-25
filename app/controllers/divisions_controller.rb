@@ -26,6 +26,7 @@ class DivisionsController < ApplicationController
 
   def show
     @division = Division.find(params[:id])
+    render :show
   end
 
   def update

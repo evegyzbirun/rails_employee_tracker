@@ -16,7 +16,7 @@
 
 
 <p><%= link_to "Edit", edit_division_employee_path(@division, @employee) %></p>
-<p><%= link_to "Delete employee", edit_division_employee_path(@division, @employee),
+<p><%= link_to "Delete Employee", division_employee_path(@division, @employee),
                         :data => {:confirm => "Are you sure?",
                                        :method => "delete"} %></p>
 

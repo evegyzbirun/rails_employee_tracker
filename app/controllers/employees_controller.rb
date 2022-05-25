@@ -23,17 +23,19 @@ class EmployeesController < ApplicationController
 
   def edit
     @employee = Employee.find(params[:id])
+    @division = Division.find(params[:division_id])
     render :edit
   end
 
   def show
     @division = Division.find(params[:division_id])
     @employee = Employee.find(params[:id])
-    @projects = Project.all
+    @projects = @employee.projects
     render :show
   end
 
   def update
+    @division = Division.find(params[:division_id])
     @employee = Employee.find(params[:id])
     if @employee.update(employee_params)
       flash[:notice] = "Employee Updated"
@@ -44,6 +46,7 @@ class EmployeesController < ApplicationController
   end
 
   def destroy
+    @division = Division.find(params[:division_id])
     @employee = Employee.find(params[:id])
     @employee.destroy
     flash[:notice] = "Employee Deleted"

@@ -1,0 +1,11 @@
+<%= render "layouts/errors", :object => @employee %>
+
+<%= form_for [@employee] do |f| %>
+<%= f.select :id, @employee.all.collect { |employee| [employee.name, employee.id] } %> 
+<% end %>
+
+
+<%= form_with(scope: "employee") do |f| %>
+  <%= f.select :id, @employees.map { |e| [e.name, e.id] } %>
+  <%= f.submit %>
+<% end %>

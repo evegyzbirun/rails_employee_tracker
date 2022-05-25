@@ -1,8 +1,27 @@
 <h1>Project title: <%= @project.title %></h1>
 
+<% if @proj_emp.any? %>
+  <h4>Here are the employees assigned to this project:</h4>
+
+  <% @proj_emp.each do |employee| %>
+    <ul>
+      <li>
+        <%= employee.name %>
+      </li>
+    </ul>
+  <% end %>
+<% else %>
+  <p>There are no employees in this project directory.</p>
+<% end %>
+
 <p><%= link_to "Edit project", edit_project_path(@project) %></p>
 <p><%= link_to "Delete project", project_path(@project),
                         :data => {:confirm => "Are you sure?",
                                        :method => "delete"} %></p>
 
 <p><%= link_to "Return to projects", projects_path %></p>
+
+<%= form_for @project do |f| %>
+    <%= f.select :id, @employees.map { |e| [e.name, e.id] } %>
+    <%= f.submit %>
+<% end %>
